@@ -95,3 +95,5 @@ kubeconfig*
 .specify/memory/
 
 **/results/
+# Go compiled binaries
+ADK/go/my-agent-ollama/firts-agent
