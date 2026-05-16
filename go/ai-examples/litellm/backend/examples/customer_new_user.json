@@ -1,0 +1,10 @@
+{
+  "name": "Sarah",
+  "surname": "Johnson",
+  "wallet_balance": 0.00,
+  "account_status": "new",
+  "subscription_level": "free",
+  "email": "sarah.johnson@example.com",
+  "customer_id": "CUST001",
+  "join_date": "2025-01-15"
+}

@@ -1,0 +1,97 @@
+Create a agetn team on GO language 
+
+
+pre-req
+** (First thing that you must do) Create a plan-{datetime}.md file for this prompt 
+folder /Users/jeffersonsoto/Documents/personalGitHub/languagelearning/ADK/go/AgentTeam
+use litellm oficial site that you must fetch https://pkg.go.dev/github.com/voocel/litellm to instance llm providers 
+
+Docs: fetch this site to find useful information on how to create https://adk.dev/tutorials/agent-team/#step-2-going-multi-model-with-litellm-optional
+
+Providers: (api key on .env file)
+* google -  "gemini-2.5-flash" 
+* ollama cloud - "gemma4:31b-cloud"
+* ollama local network: gemma4:e2b  ip: 192.168.1.121
+* ollama local network: llama3.2:1b ip: 192.168.1.121
+
+** Use the equivalent for python docstring in go 
+
+*orchestrator 
+    * model: "gemini-2.5-flash"
+    * Description: "Orchestrator of the conversation",
+	* Instruction: "You are a helpful orchestrator that receives a prompt and route to the specific subagent",
+    * Subagents: [weather_agent_gog, ]
+    * Tools:  geminitool.GoogleSearch{},
+    * must have: session, runner 
+
+* weather_agent_gog
+    * model: "gemma4:e2b"
+    * Description: "Tells the current time in a specific city",
+	* Instruction: "You are a helpful assistant that tells the current weather in a city.",
+    * Subagents: [weather_agent_gog, ]
+    * Tools:  customTool.get_weather
+    * must have: session, runner 
+
+* greeting_agent
+    * model: "llama3.2:1b"
+    * instruction="You are the Greeting Agent. Your ONLY task is to provide a friendly greeting to the user. "
+                    "Use the 'say_hello' tool to generate the greeting. "
+                    "If the user provides their name, make sure to pass it to the tool. "
+                    "Do not engage in any other conversation or tasks.",
+    * description="Handles simple greetings and hellos using the 'say_hello' tool.", # Crucial for delegation
+    *  tools=[say_hello],
+    * must have: session, runner 
+    * exmaple of toll in python: 
+                                # @title Define Tools for Greeting and Farewell Agents
+                        from typing import Optional # Make sure to import Optional
+
+                        # Ensure 'get_weather' from Step 1 is available if running this step independently.
+                        # def get_weather(city: str) -> dict: ... (from Step 1)
+
+                        def say_hello(name: Optional[str] = None) -> str:
+                            """Provides a simple greeting. If a name is provided, it will be used.
+
+                            Args:
+                                name (str, optional): The name of the person to greet. Defaults to a generic greeting if not provided.
+
+                            Returns:
+                                str: A friendly greeting message.
+                            """
+                            if name:
+                                greeting = f"Hello, {name}!"
+                                print(f"--- Tool: say_hello called with name: {name} ---")
+                            else:
+                                greeting = "Hello there!" # Default greeting if name is None or not explicitly passed
+                                print(f"--- Tool: say_hello called without a specific name (name_arg_value: {name}) ---")
+                            return greeting
+
+                        def say_goodbye() -> str:
+                            """Provides a simple farewell message to conclude the conversation."""
+                            print(f"--- Tool: say_goodbye called ---")
+                            return "Goodbye! Have a great day."
+
+                        print("Greeting and Farewell tools defined.")
+
+                        # Optional self-test
+                        print(say_hello("Alice"))
+                        print(say_hello()) # Test with no argument (should use default "Hello there!")
+                        print(say_hello(name=None)) # Test with name explicitly as None (should use default "Hello there!")
+
+* greeting_agent
+    * model: "gemma4:31b-cloud"
+    *     instruction="You are the Farewell Agent. Your ONLY task is to provide a polite goodbye message. "
+                    "Use the 'say_goodbye' tool when the user indicates they are leaving or ending the conversation "
+                    "(e.g., using words like 'bye', 'goodbye', 'thanks bye', 'see you'). "
+                    "Do not perform any other actions.",
+    * description="Handles simple farewells and goodbyes using the 'say_goodbye' tool.", # Crucial for delegation
+    * tools=[say_goodbye],
+    * must have: session, runner 
+
+
+* Create README file 
+* Create AGENTS file
+
+* Testing section 
+
+    * Open adk ui to test the agent go run agent.go web webui api
+    * Preload a message to see al the agent runing 

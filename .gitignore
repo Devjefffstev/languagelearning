@@ -1,0 +1,83 @@
+# === Go ===
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+**/bin/
+**/vendor/
+*.db
+
+# === Node / Angular ===
+**/node_modules/
+**/dist/
+**/.angular/cache
+npm-debug.log*
+yarn-error.log
+pnpm-lock.yaml
+package-lock.json
+
+# === Compiled output ===
+/tmp
+/out-tsc
+/bazel-out
+
+# === Environment & secrets ===
+.env
+.env.*
+*.key
+*.crt
+*.pem
+
+# === IDEs and editors ===
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+*.swp
+*.swo
+*~
+
+# === OS ===
+.DS_Store
+Thumbs.db
+.$*.bkp
+
+# === Docker ===
+# Don't broadly ignore *.log — only specific log files
+npm-debug.log
+testem.log
+/libpeerconnection.log
+
+# === Terraform ===
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraform.lock.hcl
+
+# === Kubernetes ===
+*.secret.yaml
+kubeconfig*
+
+# === Angular misc ===
+.sass-cache/
+/connect.lock
+/coverage
+/typings
+
+# === Speckit memory (local per-user) ===
+.specify/memory/
+
+**/results/

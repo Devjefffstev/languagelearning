@@ -1,0 +1,10 @@
+{
+  "name": "Marcus",
+  "surname": "Thompson",
+  "wallet_balance": 4850.75,
+  "account_status": "active",
+  "subscription_level": "premium",
+  "email": "marcus.thompson@company.com",
+  "customer_id": "CUST042",
+  "join_date": "2023-06-20"
+}

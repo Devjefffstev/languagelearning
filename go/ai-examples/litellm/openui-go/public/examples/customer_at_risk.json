@@ -1,0 +1,10 @@
+{
+  "name": "Elena",
+  "surname": "Rodriguez",
+  "wallet_balance": 12.50,
+  "account_status": "at_risk",
+  "subscription_level": "starter",
+  "email": "elena.r.2022@email.com",
+  "customer_id": "CUST089",
+  "join_date": "2024-03-08"
+}
