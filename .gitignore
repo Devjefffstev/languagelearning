@@ -24,6 +24,13 @@ package-lock.json
 /out-tsc
 /bazel-out
 
+# === Next.js ===
+**/.next/
+
+# === Go binaries (no-ext compiled artifacts) ===
+**/test_runner
+**/build-*
+
 # === Environment & secrets ===
 .env
 .env.*
@@ -53,6 +60,13 @@ package-lock.json
 .DS_Store
 Thumbs.db
 .$*.bkp
+
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
 
 # === Docker ===
 # Don't broadly ignore *.log — only specific log files
