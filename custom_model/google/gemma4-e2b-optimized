@@ -1,0 +1,8 @@
+FROM gemma4:e2b
+PARAMETER num_ctx 32768
+PARAMETER num_gpu 20
+PARAMETER num_predict 2048
+PARAMETER temperature 0.1
+PARAMETER top_p 0.5
+PARAMETER repeat_penalty 1.2
+PARAMETER seed 42
