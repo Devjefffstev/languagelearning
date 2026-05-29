@@ -1,0 +1,100 @@
+Initialized InMemoryService.
+
+--- Examining Session Properties ---
+ID (`ID()`): 1234
+Application Name (`AppName()`): my_go_app
+State (`State().Get()`):    initial_key = <nil>
+Events (`Events().Len()`):  0
+Last Update (`LastUpdateTime()`): 2026-05-23 20:06:16
+---------------------------------
+Current task status: idle
+Running greeting agent...
+CREATED SESSION: app=my_go_app user=example_go_user session=1234
+Agent responded with: ["Hello there! How can I help you today?\n"]
+State after agent run: last_greeting = "Hello there! How can I help you today?\n"
+
+2026/05/23 20:06:16 Starting the web server: &{port:8080 writeTimeout:15000000000 readTimeout:15000000000 idleTimeout:60000000000 shutdownTimeout:15000000000 otelToCloud:false}
+2026/05/23 20:06:16 
+2026/05/23 20:06:16 Web servers starts on http://localhost:8080
+2026/05/23 20:06:16        api:  you can access API using http://localhost:8080/api
+2026/05/23 20:06:16        api:      for instance: http://localhost:8080/api/list-apps
+2026/05/23 20:06:16        webui:  you can access API using http://localhost:8080/ui/
+2026/05/23 20:06:16 
+2026/05/23 20:06:16 Run failed: server failed: listen tcp :8080: bind: address already in use
+
+Arguments: Specify one of the following:
+  * console - runs an agent in console mode.
+  * web - starts web server with additional sub-servers specified by sublaunchers
+Details:
+  console
+  -otel_to_cloud
+    	Enables/disables OpenTelemetry export to GCP: telemetry.googleapis.com. See adk-go/telemetry package for details about supported options, credentials and environment variables.
+  -shutdown-timeout duration
+    	Console shutdown timeout (i.e. '10s', '2m' - see time.ParseDuration for details) - for waiting for active requests to finish during shutdown (default 2s)
+  -streaming_mode string
+    	defines streaming mode (none|sse)
+
+  web
+  -idle-timeout duration
+    	Server idle timeout (i.e. '10s', '2m' - see time.ParseDuration for details) - for waiting for the next request (only when keep-alive is enabled) (default 1m0s)
+  -otel_to_cloud
+    	Enables/disables OpenTelemetry export to GCP: telemetry.googleapis.com. See adk-go/telemetry package for details about supported options, credentials and environment variables.
+  -port int
+    	Localhost port for the server (default 8080)
+  -read-timeout duration
+    	Server read timeout (i.e. '10s', '2m' - see time.ParseDuration for details) - for reading the whole request including body (default 15s)
+  -shutdown-timeout duration
+    	Server shutdown timeout (i.e. '10s', '2m' - see time.ParseDuration for details) - for waiting for active requests to finish during shutdown (default 15s)
+  -write-timeout duration
+    	Server write timeout (i.e. '10s', '2m' - see time.ParseDuration for details) - for writing the response after reading the headers & body (default 15s)
+  You may specify sublaunchers:
+    * webui - starts ADK Web UI server which provides UI for interacting with ADK REST API
+    * a2a - starts A2A server which handles jsonrpc requests on /a2a/invoke path
+    * pubsub - starts ADK PubSub trigger endpoint server
+    * eventarc - starts ADK Eventarc trigger endpoint server
+    * api - starts ADK REST API server, accepting origins specified by webui_address (CORS)
+  Sublaunchers syntax:
+    webui
+    -api_server_address string
+    	ADK REST API server address as seen from the user browser. Please specify the whole URL, i.e. 'http://localhost:8080/api'. (default "http://localhost:8080/api")
+
+    a2a
+    -a2a_agent_url string
+    	A2A host URL as advertised in the public agent card. It is used by A2A clients as a connection endpoint. (default "http://localhost:8080")
+
+    pubsub
+    -path_prefix string
+    	Path prefix for the PubSub trigger endpoint. Default is '/api'. (default "/api")
+  -trigger_base_delay duration
+    	Base delay for trigger retry exponential backoff (default 1s)
+  -trigger_max_concurrent_runs int
+    	Maximum concurrent trigger runs (default 100)
+  -trigger_max_delay duration
+    	Maximum delay for trigger retry exponential backoff (default 10s)
+  -trigger_max_retries int
+    	Maximum retries for HTTP 429 errors from triggers (default 3)
+
+    eventarc
+    -path_prefix string
+    	Path prefix for the Eventarc trigger endpoint. Default is '/api'. (default "/api")
+  -trigger_base_delay duration
+    	Base delay for trigger retry exponential backoff (default 1s)
+  -trigger_max_concurrent_runs int
+    	Maximum concurrent trigger runs (default 100)
+  -trigger_max_delay duration
+    	Maximum delay for trigger retry exponential backoff (default 10s)
+  -trigger_max_retries int
+    	Maximum retries for HTTP 429 errors from triggers (default 3)
+
+    api
+    -path_prefix string
+    	ADK REST API path prefix. Default is '/api'. (default "/api")
+  -sse-write-timeout duration
+    	SSE server write timeout (i.e. '10s', '2m' - see time.ParseDuration for details) - for writing the SSE response after reading the headers & body (default 2m0s)
+  -trace_capacity int
+    	Maximum number of traces to keep in memory. (default 10000)
+  -webui_address string
+    	ADK WebUI address as seen from the user browser. It's used to allow CORS requests. Please specify only hostname and (optionally) port. (default "localhost:8080")
+
+
+exit status 1
