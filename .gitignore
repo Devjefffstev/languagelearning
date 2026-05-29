@@ -95,5 +95,6 @@ kubeconfig*
 .specify/memory/
 
 **/results/
-# Go compiled binaries
-ADK/go/my-agent-ollama/firts-agent
+# Compiled Go binaries (any file without extension inside Go/WebUI project dirs)
+**/go/**/[!.]*
+**/webui/**/[!.]*

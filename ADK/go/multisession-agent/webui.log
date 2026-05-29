@@ -1,0 +1,36 @@
+Initialized InMemoryService.
+
+--- Examining Session Properties ---
+ID (`ID()`): 1234
+Application Name (`AppName()`): my_go_app
+State (`State().Get()`):    initial_key = <nil>
+Events (`Events().Len()`):  0
+Last Update (`LastUpdateTime()`): 2026-05-23 20:02:22
+---------------------------------
+Current task status: idle
+Running greeting agent...
+CREATED SESSION: app=my_go_app user=example_go_user session=1234
+Agent responded with: ["Hello there! How can I help you today?\n"]
+State after agent run: last_greeting = "Hello there! How can I help you today?\n"
+
+2026/05/23 20:02:23 Starting the web server: &{port:8080 writeTimeout:15000000000 readTimeout:15000000000 idleTimeout:60000000000 shutdownTimeout:15000000000 otelToCloud:false}
+2026/05/23 20:02:23 
+2026/05/23 20:02:23 Web servers starts on http://localhost:8080
+2026/05/23 20:02:23        api:  you can access API using http://localhost:8080/api
+2026/05/23 20:02:23        api:      for instance: http://localhost:8080/api/list-apps
+2026/05/23 20:02:23        webui:  you can access API using http://localhost:8080/ui/
+2026/05/23 20:02:23 
+2026/05/23 20:02:42 GET /ui/?app=my_go_app&session=1234&userId=example_go_user 6.579792ms
+2026/05/23 20:05:45 GET /ui/ 625.084µs
+2026/05/23 20:06:18 GET /ui/?app=my_go_app&session=1234&userId=example_go_user 174.375µs
+2026/05/23 20:06:43 GET /ui/?app=my_go_app&session=1234&userId=example_go_user 141.333µs
+2026/05/23 20:07:10 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 422.459µs
+2026/05/23 20:07:10 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 67.541µs
+2026/05/23 20:10:53 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 154.958µs
+2026/05/23 20:10:53 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 51.416µs
+2026/05/23 20:15:52 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 151.75µs
+2026/05/23 20:23:11 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 124.833µs
+2026/05/23 20:28:48 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 92.041µs
+2026/05/23 20:34:52 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 103.416µs
+2026/05/23 20:44:08 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 79.125µs
+2026/05/23 20:48:27 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 95.209µs

@@ -1,0 +1,52 @@
+Initialized InMemoryService instance: 0x14000388240
+Session created successfully: ID=1234, AppName=my_go_app, UserID=example_go_user
+
+--- Examining Session Properties ---
+ID (`ID()`): 1234
+Application Name (`AppName()`): my_go_app
+State (`State().Get()`):    initial_key = <nil>
+Events (`Events().Len()`):  0
+Last Update (`LastUpdateTime()`): 2026-05-23 21:30:31
+---------------------------------
+Verified session retrieval: ID=1234
+Launcher starting...
+To interact with the agent, open your browser to:
+  http://localhost:8080/ui/?app=my_go_app&session=1234&userId=example_go_user
+Then type a message in the input box and press Enter.
+2026/05/23 21:30:31 Starting the web server: &{port:8080 writeTimeout:15000000000 readTimeout:15000000000 idleTimeout:60000000000 shutdownTimeout:15000000000 otelToCloud:false}
+2026/05/23 21:30:31 
+2026/05/23 21:30:31 Web servers starts on http://localhost:8080
+2026/05/23 21:30:31        webui:  you can access API using http://localhost:8080/ui/
+2026/05/23 21:30:31        api:  you can access API using http://localhost:8080/api
+2026/05/23 21:30:31        api:      for instance: http://localhost:8080/api/list-apps
+2026/05/23 21:30:31 
+2026/05/23 21:31:02 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 249.083µs
+2026/05/23 21:31:32 GET /ui/?app=my_go_app&session=1234&userId=example_go_user 1.4785ms
+2026/05/23 21:33:31 GET /api/apps/my_go_app/users/example_go_user/sessions/1234 142.042µs
+2026/05/23 21:33:33 GET /ui/?app=simple_agent&session=24786268-5827-4959-813e-41fe35ec796f&userId=user 1.008334ms
+2026/05/23 21:33:33 GET /api/builder/app/simple_agent?ts=1779590013786 35.958µs
+2026/05/23 21:33:34 GET /api/apps/simple_agent/eval_sets 89.292µs
+2026/05/23 21:33:34 GET /api/apps/simple_agent/eval_results 62.75µs
+2026/05/23 21:33:34 GET /api/apps/simple_agent/users/user/sessions 195.75µs
+2026/05/23 21:33:36 POST /api/run_sse 611.792µs
+2026/05/23 21:33:36 GET /api/debug/trace/session/24786268-5827-4959-813e-41fe35ec796f 312.625µs
+2026/05/23 21:33:49 GET /ui/?app=simple_agent&session=24786268-5827-4959-813e-41fe35ec796f&userId=user 199.417µs
+2026/05/23 21:33:49 GET /ui/chunk-W7GRJBO5.js 98.334µs
+2026/05/23 21:33:49 GET /ui/chunk-7TJPJFPQ.js 638.833µs
+2026/05/23 21:33:49 GET /ui/polyfills-5CFQRCPP.js 131.792µs
+2026/05/23 21:33:50 GET /ui/styles-YY6V3TJU.css 207.917µs
+2026/05/23 21:33:50 GET /ui/main-ORIYWHAC.js 10.759708ms
+2026/05/23 21:33:50 GET /ui/assets/config/runtime-config.json 78µs
+2026/05/23 21:33:50 GET /api/list-apps?relative_path=./ 48.833µs
+2026/05/23 21:33:50 GET /ui/assets/ADK-512-color.svg 88.375µs
+2026/05/23 21:33:50 GET /api/builder/app/simple_agent?ts=1779590030095 27.166µs
+2026/05/23 21:33:50 GET /api/apps/simple_agent/users/user/sessions/24786268-5827-4959-813e-41fe35ec796f 46.208µs
+2026/05/23 21:33:50 GET /ui/adk_favicon.svg 63.916µs
+2026/05/23 21:33:50 POST /api/apps/simple_agent/users/user/sessions 103.917µs
+2026/05/23 21:33:50 GET /api/apps/simple_agent/users/user/sessions/a31ef46b-5c62-48fc-bb20-37c92d6a913a 39.125µs
+2026/05/23 21:33:50 GET /api/debug/trace/session/a31ef46b-5c62-48fc-bb20-37c92d6a913a 19.541µs
+2026/05/23 21:33:50 GET /api/debug/trace/session/a31ef46b-5c62-48fc-bb20-37c92d6a913a 8.042µs
+2026/05/23 21:33:50 GET /api/apps/simple_agent/users/user/sessions 116.042µs
+2026/05/23 21:33:50 GET /api/apps/simple_agent/eval_sets 19.583µs
+2026/05/23 21:33:50 GET /api/apps/simple_agent/eval_results 21.625µs
+2026/05/23 21:33:50 GET /api/apps/simple_agent/users/user/sessions 96.417µs

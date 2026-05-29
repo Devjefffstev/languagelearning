@@ -7,7 +7,7 @@
 //   - farewell_agent    (gemma4:31b-cloud via Ollama Cloud + say_goodbye)
 //
 // Run:
-//
+// source .env && go run main.go web --port 3000 webui -api_server_address=http://localhost:3000/api api
 //	source .env && go run main.go web api webui
 package main
 
@@ -72,6 +72,8 @@ func main() {
 // seedSession runs preloadMessages through the runner and stores the full
 // conversation in svc under a fixed user/session so the web UI can display it.
 func seedSession(ctx context.Context, root agent.Agent, svc session.Service) error {
+	
+	// http://localhost:8080/ui/?app=orchestrator&session=demo-session=demo-user
 	const appName = "orchestrator"
 	const userID = "demo-user"
 	const sessionID = "demo-session"
