@@ -1,0 +1,3 @@
+[submodule "bonsai-macos"]
+	path = bonsai-macos
+	url = https://github.com/PrismML-Eng/Bonsai-Image-Demo.git
