@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-BIN_DIR="$HOME/Home/custom_models/llama.cpp/build-cuda12.4/llama-prism-b8846-d104cf1"
-MODELS_DIR="$HOME/Home/custom_models/llama.cpp/models"
-CUDART_DIR="/usr/local/lib/ollama/cuda_v12"
-
-export LD_LIBRARY_PATH="$CUDART_DIR:$BIN_DIR:$LD_LIBRARY_PATH"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../config.sh"
 
 model="${1:-Ternary-Bonsai-4B-Q2_0.gguf}"
 prompt="${2:-Hello}"
