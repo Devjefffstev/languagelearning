@@ -97,3 +97,6 @@ kubeconfig*
 **/results/
 # Go compiled binaries
 ADK/go/my-agent-ollama/firts-agent
+
+# bonsai data (binaries + large models, not tracked)
+bonsai/data/
