@@ -95,6 +95,6 @@ kubeconfig*
 .specify/memory/
 
 **/results/
-# Compiled Go binaries (files without extension in Go/WebUI project dirs)
-ADK/go/*/[!.]*
-ADK/webui/*/[!.]*
+# Compiled Go binaries (any file without extension inside Go/WebUI project dirs)
+**/go/**/[!.]*
+**/webui/**/[!.]*
