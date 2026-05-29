@@ -1,0 +1,260 @@
+//Basic agent that uses Ollama-hosted models via OpenAI-compatible API.
+// https://adk.dev/agents/models/ollama/
+//
+// Usage:
+
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"os"
+	"strings"
+
+	// "time"
+
+	"google.golang.org/adk/agent"
+	"google.golang.org/adk/agent/llmagent"
+	"google.golang.org/adk/cmd/launcher"
+	"google.golang.org/adk/cmd/launcher/full"
+	"google.golang.org/adk/session"
+	"google.golang.org/adk/tool"
+	"google.golang.org/genai"
+"google.golang.org/adk/model"
+	"google.golang.org/adk/runner"
+
+	genaiopenai "github.com/achetronic/adk-utils-go/genai/openai"
+)
+const (
+	appName = "my_go_app"
+	userID = "example_go_user"
+	sessionID = "1234"
+	// modelID   = "gemini-2.0-flash" // Replace with a valid model name
+)
+func main() {
+	ctx := context.Background()
+
+	apiKey := strings.TrimSpace(os.Getenv("OLLAMA_API_KEY"))
+	var baseURL string
+	var modelName string
+
+	if apiKey != "" {
+		baseURL = "https://ollama.com"
+		modelName = strings.TrimSpace(os.Getenv("OLLAMA_CLOUD_MODEL"))
+	} else {
+		baseURL = strings.TrimSpace(os.Getenv("OLLAMA_BASE_URL"))
+		if baseURL == "" {
+			baseURL = "http://localhost:11434"
+		}
+		modelName = strings.TrimSpace(os.Getenv("OLLAMA_MODEL"))
+	}
+	if modelName == "" {
+		modelName = "gemma3:latest"
+	}
+
+	model := genaiopenai.New(genaiopenai.Config{
+		APIKey:    apiKey,
+		BaseURL:   baseURL + "/v1",
+		ModelName: modelName,
+	})
+
+	/// --- SessionService Implementations ---
+
+	// 1. InMemoryService
+	// Stores all session data directly in the application's memory.
+	// All conversation data is lost if the application restarts.
+inMemoryService := session.InMemoryService()
+fmt.Printf("Initialized InMemoryService instance: %p\n", inMemoryService)
+
+	// --- Examining Session Properties ---
+	// We'll use the InMemoryService for this demonstration.
+	// --8<-- [start:examine_session]
+	
+	initialState := map[string]any{
+		"user:login_count": 0,
+			"task_status":      "idle",
+	}
+
+	// Create a session to examine its properties.
+	createResp, err := inMemoryService.Create(ctx, &session.CreateRequest{
+		AppName: appName,
+		UserID:  userID,
+		SessionID: sessionID,
+		State:   initialState,
+	})
+	if err != nil {
+		log.Fatalf("Failed to create session: %v", err)
+	}
+	exampleSession := createResp.Session
+
+	fmt.Println("\n--- Examining Session Properties ---")
+	fmt.Printf("ID (`ID()`): %s\n", exampleSession.ID())
+	fmt.Printf("Application Name (`AppName()`): %s\n", exampleSession.AppName())
+	// To access state, you call Get().
+	val, _ := exampleSession.State().Get("initial_key")
+	fmt.Printf("State (`State().Get()`):    initial_key = %v\n", val)
+
+	// Events are initially empty.
+	fmt.Printf("Events (`Events().Len()`):  %d\n", exampleSession.Events().Len())
+	fmt.Printf("Last Update (`LastUpdateTime()`): %s\n", exampleSession.LastUpdateTime().Format("2006-01-02 15:04:05"))
+	fmt.Println("---------------------------------")
+
+	
+	// // Clean up the session.
+	// err = inMemoryService.Delete(ctx, &session.DeleteRequest{
+	// 	AppName:   exampleSession.AppName(),
+	// 	UserID:    exampleSession.UserID(),
+	// 	SessionID: exampleSession.ID(),
+	// })
+	// if err != nil {
+	// 	log.Fatalf("Failed to delete session: %v", err)
+	// }
+	// fmt.Println("Session deleted successfully.")
+	// --8<-- [end:examine_session]
+
+	orchestratorAgent, err := llmagent.New(llmagent.Config{
+		Name:        "orchestrator_agent",
+		Model:       model,
+		Description: "A helpful orchestrator for multiple processes.",
+		Instruction: "start a session and delegate tasks to tools as needed.",
+		Tools:       []tool.Tool{},
+		OutputKey: "last_greeting",
+	})
+	if err != nil {
+		log.Fatalf("Failed to create agent: %v", err)
+	}
+
+
+/////////////////
+
+	fmt.Printf("About to get session: AppName=%s, UserID=%s, SessionID=%s\n", appName, userID, sessionID)
+	// Retrieve the original session to get task status
+	s, err := inMemoryService.Get(ctx, &session.GetRequest{AppName: appName, UserID: userID, SessionID: sessionID})
+	if err != nil {
+		log.Fatalf("Failed to get session: %v", err)
+	}
+
+	taskStatus, _ := s.Session.State().Get("task_status")
+	fmt.Printf("Current task status: %v\n", taskStatus)
+	
+	
+	// Update the state to indicate a new task is in progress.
+
+grettingAgent, err := llmagent.New(llmagent.Config{
+		Name:        "greeting_agent",
+		Model:       model,
+			Instruction: "Generate a short, friendly greeting.",
+		OutputKey:   "last_greeting",
+	
+	})
+	if err != nil {
+		log.Fatalf("Failed to create agent: %v", err)
+	}
+
+r, err := runner.New(runner.Config{
+	AppName:        appName,
+	Agent:          grettingAgent,
+	SessionService: inMemoryService,
+})
+
+fmt.Println("Running greeting agent...")
+fmt.Printf("CREATED SESSION: app=%s user=%s session=%s\n", appName, userID, sessionID)
+
+	// Run the agent
+	userMessage := genai.NewContentFromText("Hello", "user")
+	for event, err := range r.Run(ctx, userID, sessionID, userMessage, agent.RunConfig{}) {
+		if err != nil {
+			log.Printf("Agent Error: %v", err)
+			continue
+		}
+		if isFinalResponse(event) {
+			if event.LLMResponse.Content != nil {
+				fmt.Printf("Agent responded with: %q\n", textParts(event.LLMResponse.Content))
+			} else {
+				fmt.Println("Agent responded.")
+			}
+		}
+	}
+
+	// Check the updated state
+	resp, err := inMemoryService.Get(ctx, &session.GetRequest{AppName: appName, UserID: userID, SessionID: sessionID})
+	if err != nil {
+		log.Fatalf("Failed to get session: %v", err)
+	}
+	lastGreeting, _ := resp.Session.State().Get("last_greeting")
+	fmt.Printf("State after agent run: last_greeting = %q\n\n", lastGreeting)
+
+
+	///////////////////
+
+
+	
+config := &launcher.Config{
+	AgentLoader:  agent.NewSingleLoader(orchestratorAgent),
+	SessionService: inMemoryService,
+}
+
+	l := full.NewLauncher()
+	if err = l.Execute(ctx, config, os.Args[1:]); err != nil {
+		log.Fatalf("Run failed: %v\n\n%s", err, l.CommandLineSyntax())
+	}
+
+
+}
+
+// --- Helper Functions ---
+
+func isFinalResponse(ev *session.Event) bool {
+	if ev.Actions.SkipSummarization || len(ev.LongRunningToolIDs) > 0 {
+		return true
+	}
+	if ev.LLMResponse.Content == nil {
+		return true
+	}
+	return !hasFunctionCalls(&ev.LLMResponse) && !hasFunctionResponses(&ev.LLMResponse) && !ev.LLMResponse.Partial && !hasTrailingCodeExecutionResult(&ev.LLMResponse)
+}
+
+func hasFunctionCalls(resp *model.LLMResponse) bool {
+	if resp == nil || resp.Content == nil {
+		return false
+	}
+	for _, part := range resp.Content.Parts {
+		if part.FunctionCall != nil {
+			return true
+		}
+	}
+	return false
+}
+
+func hasFunctionResponses(resp *model.LLMResponse) bool {
+	if resp == nil || resp.Content == nil {
+		return false
+	}
+	for _, part := range resp.Content.Parts {
+		if part.FunctionResponse != nil {
+			return true
+		}
+	}
+	return false
+}
+
+func hasTrailingCodeExecutionResult(resp *model.LLMResponse) bool {
+	if resp == nil || resp.Content == nil || len(resp.Content.Parts) == 0 {
+		return false
+	}
+	lastPart := resp.Content.Parts[len(resp.Content.Parts)-1]
+	return lastPart.CodeExecutionResult != nil
+}
+
+func textParts(c *genai.Content) (ret []string) {
+	if c == nil {
+		return nil
+	}
+	for _, p := range c.Parts {
+		if p.Text != "" {
+			ret = append(ret, p.Text)
+		}
+	}
+	return ret
+}

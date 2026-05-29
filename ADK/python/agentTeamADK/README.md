@@ -1,0 +1,144 @@
+# agentTeamADK
+
+This app implements the full ADK agent-team tutorial flow in one project under `ADK/python/agentTeamADK`:
+
+1. basic weather agent flow
+2. LiteLLM multi-model wiring
+3. agent-team delegation
+4. session-state memory and personalization
+5. `before_model_callback` input guardrail
+6. `before_tool_callback` tool guardrail
+
+## What changed from the tutorial
+
+- The main/root flow uses **Ollama Cloud** through **LiteLLM**.
+- The **greeting agent** uses **local Ollama** at `http://192.168.1.172:11434` with `gemma4:e2b` by default.
+- The tutorial’s hardcoded mock weather replies were removed. The weather tool fetches live weather context and the model writes the final response.
+- The project includes a manual CLI runner so session memory is easy to inspect in one conversation.
+
+## Project layout
+
+```text
+agentTeamADK/
+├── .env.example
+├── README.md
+├── __init__.py
+├── __main__.py
+├── agent.py
+├── cli.py
+├── config.py
+├── guards.py
+├── pyproject.toml
+├── tests/
+│   ├── test_callbacks.py
+│   └── test_config.py
+└── tools.py
+```
+
+## Prerequisites
+
+- Python 3.10+
+- network access for the live weather tool
+- an Ollama Cloud API key
+- local Ollama running if you want the greeting agent to use the default local model
+
+## Setup
+
+From `ADK/python/agentTeamADK`:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+cp .env.example .env
+```
+
+Then edit `.env` and set at least:
+
+```dotenv
+ollama_api_key=your_ollama_cloud_api_key
+Ollama_cloud_model=gpt-oss:120b
+```
+
+The local greeting agent defaults are already set to:
+
+```dotenv
+OLLAMA_BASE_URL=http://192.168.1.172:11434
+OLLAMA_MODEL=gemma4:e2b
+```
+
+## Configuration
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `ollama_api_key` | Yes | Ollama Cloud API key used by the root and farewell agents |
+| `Ollama_cloud_model` | Yes | Cloud model name; raw names are normalized to `ollama_chat/...` |
+| `OLLAMA_CLOUD_API_BASE` | No | Defaults to `https://ollama.com` |
+| `OLLAMA_BASE_URL` | No | Local Ollama host for the greeting agent |
+| `OLLAMA_MODEL` | No | Local greeting model; defaults to `gemma4:e2b` |
+| `TEMPERATURE_UNIT_DEFAULT` | No | Initial session preference, `Celsius` or `Fahrenheit` |
+| `BLOCK_KEYWORD` | No | Input guardrail keyword; defaults to `BLOCK` |
+| `BLOCKED_WEATHER_CITY` | No | Tool guardrail city; defaults to `Paris` |
+| `APP_NAME` | No | Runner app name |
+| `USER_ID` | No | Default user id for the manual runner |
+| `SESSION_ID` | No | Default session id for the manual runner |
+
+## Run the manual session runner
+
+This is the easiest way to see Step 4 session memory in action.
+
+```bash
+agent-team-adk
+```
+
+Useful commands inside the REPL:
+
+- `/state` prints the current session state
+- `/quit` exits
+
+One-shot query:
+
+```bash
+agent-team-adk --query "What is the weather in London?"
+```
+
+## Run with ADK tools
+
+From `ADK/python`:
+
+```bash
+adk run agentTeamADK
+```
+
+or:
+
+```bash
+adk web
+```
+
+Then select `agentTeamADK`.
+
+## Example prompts
+
+```text
+Hello, I'm Jefferson
+Please use Fahrenheit from now on
+What is the weather in Tokyo?
+What about New York?
+Bye for now
+```
+
+Guardrail examples:
+
+```text
+BLOCK the request for London weather
+What's the weather in Paris?
+```
+
+## Notes
+
+- The root agent’s `before_model_callback` blocks requests containing the configured keyword.
+- The root agent’s `before_tool_callback` blocks weather lookups for the configured city.
+- Greeting/farewell replies are model-written; tools only provide context and memory signals.
+- The weather tool uses Open-Meteo APIs and returns structured facts instead of hardcoded prose.
+

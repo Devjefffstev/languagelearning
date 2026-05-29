@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-team-adk"
+version = "0.1.0"
+description = "ADK agent team example with Ollama Cloud, local Ollama, memory, and guardrails."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "google-adk>=1.0.0",
+  "litellm>=1.81.0",
+  "python-dotenv>=1.0.1",
+  "httpx>=0.27.0",
+]
+
+[project.scripts]
+agent-team-adk = "agentTeamADK.cli:main"
+
+[tool.setuptools]
+packages = ["agentTeamADK"]
+package-dir = { "agentTeamADK" = "." }
+
