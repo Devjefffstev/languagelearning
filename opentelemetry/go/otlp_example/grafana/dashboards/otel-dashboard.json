@@ -1,0 +1,248 @@
+{
+  "title": "OTLP Observability",
+  "description": "Observability dashboard for the OTLP Go dice app — Prometheus metrics, Loki logs, and Jaeger traces",
+  "tags": ["otlp", "opentelemetry", "go", "dice"],
+  "timezone": "browser",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Prometheus Metrics",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "collapsed": false
+    },
+    {
+      "id": 2,
+      "title": "Total Dice Rolls",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 4, "x": 0, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sum(dice_rolls_total{roll_value=~\"$roll_value\"})",
+          "legendFormat": "rolls"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Roll Rate by Value",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 10, "x": 4, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "rate(dice_rolls_total{roll_value=~\"$roll_value\"}[1m])",
+          "legendFormat": "roll={{@roll_value}}"
+        }
+      ],
+      "options": {
+        "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": { "unit": "rolls/s", "min": 0, "color": { "mode": "palette-classic" } }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Rolls per Value",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 10, "x": 14, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sum(dice_rolls_total{roll_value=~\"$roll_value\"}) by (roll_value)",
+          "legendFormat": "roll={{roll_value}}"
+        }
+      ],
+      "options": {
+        "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "min": 0,
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "drawStyle": "bars",
+            "barAlignment": 0,
+            "barMaxWidth": 30,
+            "lineStyle": { "fill": "solid" },
+            "fillOpacity": 80,
+            "stacking": { "mode": "normal", "group": "" }
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Loki Logs",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 7 },
+      "collapsed": false
+    },
+    {
+      "id": 6,
+      "title": "Dice Roll Logs",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 8 },
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "sum by(detected_level) (count_over_time({service_name=\"otlp-collector-app\"} |= \"rolling the dice\" [$__interval]))",
+          "legendFormat": "{{detected_level}}"
+        }
+      ],
+      "options": {
+        "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": { "unit": "cps", "min": 0, "color": { "mode": "palette-classic" } }
+      }
+    },
+    {
+      "id": 7,
+      "title": "App Error Logs",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 8 },
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "count_over_time({service_name=\"otlp-collector-app\"} |= \"error\" [$__interval])",
+          "legendFormat": "errors"
+        }
+      ],
+      "options": {
+        "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": { "unit": "cpm", "min": 0, "color": { "mode": "palette-classic" } }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Recent Dice Logs",
+      "type": "logs",
+      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 8 },
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "{service_name=\"otlp-collector-app\"} |= \"$logfilter\"",
+          "legendFormat": ""
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending"
+      }
+    },
+    {
+      "id": 9,
+      "title": "Jaeger Traces",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
+      "collapsed": false
+    },
+    {
+      "id": 10,
+      "title": "Roll Traces",
+      "type": "table",
+      "gridPos": { "h": 12, "w": 24, "x": 0, "y": 15 },
+      "datasource": { "type": "jaeger", "uid": "jaeger" },
+      "targets": [
+        {
+          "queryType": "search",
+          "service": "otlp-collector-app",
+          "operation": "",
+          "minDuration": "$minDuration",
+          "maxDuration": "$maxDuration",
+          "limit": 20
+        }
+      ],
+      "options": {
+        "sortBy": [{"displayName": "Start time", "desc": true}]
+      },
+      "fieldConfig": {
+        "defaults": {}
+      }
+    }
+  ],
+  "schemaVersion": 39,
+  "version": 3,
+  "refresh": "10s",
+  "time": { "from": "now-15m", "to": "now" },
+  "timepicker": {
+    "refresh_intervals": ["5s", "10s", "30s", "1m", "5m", "15m", "30m"],
+    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "roll_value",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "query": "label_values(dice_rolls_total, roll_value)",
+        "refresh": 2,
+        "multi": true,
+        "includeAll": true,
+        "allValue": ".*",
+        "sort": 1
+      },
+      {
+        "name": "service",
+        "type": "query",
+        "datasource": { "type": "jaeger", "uid": "jaeger" },
+        "query": "services",
+        "refresh": 2,
+        "multi": false
+      },
+      {
+        "name": "operation",
+        "type": "query",
+        "datasource": { "type": "jaeger", "uid": "jaeger" },
+        "query": "operations($service)",
+        "refresh": 2,
+        "multi": false
+      },
+      {
+        "name": "minDuration",
+        "type": "textbox",
+        "query": "",
+        "refresh": 2,
+        "hide": ""
+      },
+      {
+        "name": "maxDuration",
+        "type": "textbox",
+        "query": "",
+        "hide": ""
+      },
+      {
+        "name": "logfilter",
+        "type": "constant",
+        "query": "",
+        "hide": ""
+      }
+    ]
+  }
+}

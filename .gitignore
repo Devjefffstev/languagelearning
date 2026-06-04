@@ -96,9 +96,5 @@ kubeconfig*
 
 **/results/
 
-# Compiled Go binaries (any file without extension inside Go/WebUI project dirs)
-**/go/**/[!.]*
-**/webui/**/[!.]*
-
 # bonsai data (binaries + large models, not tracked)
 bonsai/data/
