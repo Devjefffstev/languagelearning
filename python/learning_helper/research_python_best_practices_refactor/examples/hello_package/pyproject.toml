@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hello-package"
+version = "0.1.0"
+description = "A 5-line demo package used in the learning_helper research guide."
+readme = "../README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Jefferson Soto", email = "you@example.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+# No runtime dependencies — this package uses only the standard library.
+# That's the whole point of using it as a teaching example: no installs.
+dependencies = []
+
+# After `pip install -e .`, the `hello` command will be available on $PATH
+# and will call hello_package.__main__.main() (which prints the greeting).
+[project.scripts]
+hello = "hello_package.__main__:main"
+
+# Hatchling treats `hello_package/` as the top-level package because it's
+# at the project root (flat layout — see the parent README's "Tooling"
+# section for the trade-off vs src/ layout).
+[tool.hatch.build.targets.wheel]
+packages = ["hello_package"]
