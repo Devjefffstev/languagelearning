@@ -1,6 +1,6 @@
-FROM gemma4:e2b
-PARAMETER num_ctx 131072
-PARAMETER num_gpu 3
+FROM qwen2.5:7b
+PARAMETER num_ctx 32768
+PARAMETER num_gpu 32
 PARAMETER num_batch 512
 PARAMETER num_thread 8
 PARAMETER num_predict 2048
