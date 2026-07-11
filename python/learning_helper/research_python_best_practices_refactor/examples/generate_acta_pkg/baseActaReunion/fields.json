@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0.0",
+  "base_doc_id": "1IMgiainbkPpkKPV1h-4Kbj7p188DJYKMKirX5aHKqc8",
+  "target_folder_id": "1hL-IKYWTVchkTiM3qzFV2yPOj-7qhmce",
+  "fields": {
+    "TIPO_REUNION": {
+      "type": "enum",
+      "required": true,
+      "values": ["ORDINARIA", "EXTRAORDINARIA"],
+      "uppercase": true,
+      "description": "Tipo de reunión del Consejo. Always UPPERCASE. The generator uppercases any input value automatically."
+    },
+    "ACTA_NO": {
+      "type": "string",
+      "required": true,
+      "pattern": "^[0-9]{2}-[0-9]{2}-[0-9]{4}$",
+      "description": "Número de acta en formato DD-MM-YYYY."
+    },
+    "FECHA_INICIO": {
+      "type": "datetime",
+      "required": true,
+      "format": "DD/MM/YYYY HH:MM:SS",
+      "description": "Fecha y hora de inicio de la reunión."
+    },
+    "FECHA_FIN": {
+      "type": "datetime",
+      "required": true,
+      "format": "DD/MM/YYYY HH:MM:SS",
+      "description": "Fecha y hora de finalización de la reunión."
+    },
+    "CIUDAD": {
+      "type": "string",
+      "required": false,
+      "default": "Bogotá",
+      "description": "Ciudad donde se realiza la reunión."
+    },
+    "DEPARTAMENTO": {
+      "type": "string",
+      "required": false,
+      "default": "Cundinamarca",
+      "description": "Departamento donde se realiza la reunión."
+    },
+    "ASIST_1_NOMBRE": { "type": "string" },
+    "ASIST_1_APTO":   { "type": "string" },
+    "ASIST_1_INTERIOR": { "type": "string" },
+    "ASIST_1_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ASIST_2_NOMBRE": { "type": "string" },
+    "ASIST_2_APTO":   { "type": "string" },
+    "ASIST_2_INTERIOR": { "type": "string" },
+    "ASIST_2_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ASIST_3_NOMBRE": { "type": "string" },
+    "ASIST_3_APTO":   { "type": "string" },
+    "ASIST_3_INTERIOR": { "type": "string" },
+    "ASIST_3_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ASIST_4_NOMBRE": { "type": "string" },
+    "ASIST_4_APTO":   { "type": "string" },
+    "ASIST_4_INTERIOR": { "type": "string" },
+    "ASIST_4_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ASIST_5_NOMBRE": { "type": "string" },
+    "ASIST_5_APTO":   { "type": "string" },
+    "ASIST_5_INTERIOR": { "type": "string" },
+    "ASIST_5_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ASIST_6_NOMBRE": { "type": "string" },
+    "ASIST_6_APTO":   { "type": "string" },
+    "ASIST_6_INTERIOR": { "type": "string" },
+    "ASIST_6_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ASIST_7_NOMBRE": { "type": "string" },
+    "ASIST_7_APTO":   { "type": "string" },
+    "ASIST_7_INTERIOR": { "type": "string" },
+    "ASIST_7_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ASIST_8_NOMBRE": { "type": "string" },
+    "ASIST_8_APTO":   { "type": "string" },
+    "ASIST_8_INTERIOR": { "type": "string" },
+    "ASIST_8_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ASIST_9_NOMBRE": { "type": "string" },
+    "ASIST_9_APTO":   { "type": "string" },
+    "ASIST_9_INTERIOR": { "type": "string" },
+    "ASIST_9_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ASIST_10_NOMBRE": { "type": "string" },
+    "ASIST_10_APTO":   { "type": "string" },
+    "ASIST_10_INTERIOR": { "type": "string" },
+    "ASIST_10_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ASIST_11_NOMBRE": { "type": "string" },
+    "ASIST_11_APTO":   { "type": "string" },
+    "ASIST_11_INTERIOR": { "type": "string" },
+    "ASIST_11_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ASIST_12_NOMBRE": { "type": "string" },
+    "ASIST_12_APTO":   { "type": "string" },
+    "ASIST_12_INTERIOR": { "type": "string" },
+    "ASIST_12_ASISTIO":  { "type": "string", "values": ["X", ""] },
+    "ADMIN_NOMBRE":   { "type": "string", "required": false, "default": "LUZ MARIBEL RUIZ ROBAYO" },
+    "ADMIN_APTO":     { "type": "string", "required": false, "default": "" },
+    "ADMIN_INTERIOR": { "type": "string", "required": false, "default": "" },
+    "ADMIN_ASISTIO":  { "type": "string", "required": false, "default": "X", "values": ["X", ""] },
+    "ORDEN_DIA": {
+      "type": "text",
+      "required": true,
+      "format": "newline-separated",
+      "description": "Lista organizada numerada de los temas a tratar. Cada línea es un ítem numerado con 'N.' al inicio."
+    },
+    "ORDEN_DIA_DESCRIPTIVO": {
+      "type": "text",
+      "required": true,
+      "format": "newline-separated",
+      "description": "Lista numerada de cada punto del orden del día con su descripción detallada. Mismo esquema de numeración que ORDEN_DIA, pero cada línea lleva una descripción corta de lo que se discutirá bajo ese punto."
+    },
+    "HORA_CIERRE": {
+      "type": "string",
+      "required": true,
+      "format": "HH:MM AM/PM",
+      "example": "07:50 P.M.",
+      "description": "Hora de cierre de la reunión en zona horaria Bogotá/Colombia, formato AM/PM con minutos. Formato: HH:MM con dos puntos, espacio, AM o PM en mayúsculas, con punto después de cada letra (P.M., no PM). Hora en rango 01–12, minutos en rango 00–59. Se inserta en 'Siendo las {{HORA_CIERRE}} se dio por terminada la reunión del Consejo de Administración'."
+    },
+    "PRESIDENTE": {
+      "type": "string",
+      "required": true,
+      "description": "Nombre del presidente del Consejo que firma el acta."
+    },
+    "SECRETARIO": {
+      "type": "string",
+      "required": true,
+      "description": "Nombre del secretario del Consejo que firma el acta."
+    }
+  }
+}

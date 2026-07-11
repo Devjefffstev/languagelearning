@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "generate-acta-pkg"
+version = "1.0.0"
+description = "Refactored package version of scripts/generate_acta/generate_acta.py."
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Jefferson Soto", email = "you@example.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+# Runtime dependencies — keep minimal. The Google API client is only
+# needed when you actually call the APIs (i.e. not for `--simulate`).
+dependencies = [
+    "google-api-python-client >= 2.0",
+    "google-auth >= 2.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/your-org/consejoMulticarabelas"
+Issues = "https://github.com/your-org/consejoMulticarabelas/issues"
+
+# Hatchling's default src discovery treats `generate_acta_pkg/` as the
+# top-level package because it sits at the project root (flat layout).
+# That's fine for this package — we're an application, not a library
+# intended for PyPI.
+[tool.hatch.build.targets.wheel]
+packages = ["generate_acta_pkg"]
+
+# ---------- Dev tooling config (optional but recommended) ----------
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+# Reasonable defaults; tighten or relax per project.
+select = ["E", "F", "I", "W", "B", "UP"]
+ignore = ["E501"]  # line length handled by formatter
