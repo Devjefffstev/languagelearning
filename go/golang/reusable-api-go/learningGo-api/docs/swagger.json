@@ -1,0 +1,36 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample API for learning Go.",
+        "title": "Learning Go API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8000",
+    "basePath": "/",
+    "paths": {
+        "/basic": {
+            "post": {
+                "description": "Returns a simple string to prove the API works",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "basic"
+                ],
+                "summary": "Basic Example",
+                "responses": {
+                    "200": {
+                        "description": "Basic Go Examples",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
