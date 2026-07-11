@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: deploy-nodeaffinity
+  name: deploy-nodeaffinity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deploy-nodeaffinity
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: deploy-nodeaffinity
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: color
+                operator: In
+                values:
+                - blue
+      containers:
+      - image: httpd
+        name: httpd
+        resources: {}
+
+status: {}

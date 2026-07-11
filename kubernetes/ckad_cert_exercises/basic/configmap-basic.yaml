@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-basic
+  namespace: default
+data:
+  APP_KEY_NAME: COLOR_KEY
+  key2: value2
+  key3: value3

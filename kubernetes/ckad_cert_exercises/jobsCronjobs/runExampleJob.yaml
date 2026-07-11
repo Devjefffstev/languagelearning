@@ -1,0 +1,22 @@
+#/bin/bash
+## Example of using jobs and modifying them
+#clear 
+nameJob=addpod.yaml
+namespace=default
+kubectl  delete -f addpod.yaml
+kubectl  delete -f parallelpod.yaml
+
+echo -e "\nCreate a pod to test Completions --------------------------------------------------------\n"
+kubectl apply -f $nameJob
+
+echo -e "\nPrint jobs --------------------------------------------------------\n"
+kubectl get jobs -n $namespace
+kubectl describe -f $nameJob -n $namespace
+echo -e "\n Creating parallelism jobs --------------------------------------------------------\n"
+kubectl apply -f parallelpod.yaml
+echo -e "\nPrint jobs --------------------------------------------------------\n"
+kubectl get jobs -n $namespace
+kubectl describe -f $nameJob -n $namespace
+
+kubectl get jobs
+kubectl get -f parallelpod.yaml

@@ -1,0 +1,38 @@
+# you must have installed the ingress controller before applying this file
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ing-demo-app
+  namespace: demo-app
+  labels:
+    app: demo-app
+    ingress: demo-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  defaultBackend:
+    resource:
+      apiGroup: k8s.example.com
+      kind: StorageBucket
+      name: static-assets
+  ingressClassName: nginx
+  rules:
+  - host: cosmoincdemoapp.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: svc-ms-test-api
+            port:
+              name: portapi
+        path: /api(/|$)(.*)
+        pathType: ImplementationSpecific
+      - backend:
+          service:
+            name: svc-ms-fronted-app
+            port:
+              name: frnt-app
+        path: /home
+        pathType: Prefix
+status:
+  loadBalancer: {}

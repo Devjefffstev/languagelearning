@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: deploy-nodeaffinity-controlplane
+  name: deploy-nodeaffinity-controlplane
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deploy-nodeaffinity-controlplane
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: deploy-nodeaffinity-controlplane
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: Exists
+      containers:
+      - image: httpd
+        name: httpd
+        resources: {}
+status: {}

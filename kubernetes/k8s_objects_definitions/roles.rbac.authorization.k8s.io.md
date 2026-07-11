@@ -1,0 +1,50 @@
+# Kind: Role
+### Version: rbac.authorization.k8s.io/v1
+
+```yaml
+KIND:     Role
+VERSION:  rbac.authorization.k8s.io/v1
+
+DESCRIPTION:
+     Role is a namespaced, logical grouping of PolicyRules that can be
+     referenced as a unit by a RoleBinding.
+
+FIELDS:
+   apiVersion	<string>
+   kind	<string>
+   metadata	<Object>
+      annotations	<map[string]string>
+      creationTimestamp	<string>
+      deletionGracePeriodSeconds	<integer>
+      deletionTimestamp	<string>
+      finalizers	<[]string>
+      generateName	<string>
+      generation	<integer>
+      labels	<map[string]string>
+      managedFields	<[]Object>
+         apiVersion	<string>
+         fieldsType	<string>
+         fieldsV1	<map[string]>
+         manager	<string>
+         operation	<string>
+         subresource	<string>
+         time	<string>
+      name	<string>
+      namespace	<string>
+      ownerReferences	<[]Object>
+         apiVersion	<string>
+         blockOwnerDeletion	<boolean>
+         controller	<boolean>
+         kind	<string>
+         name	<string>
+         uid	<string>
+      resourceVersion	<string>
+      selfLink	<string>
+      uid	<string>
+   rules	<[]Object>
+      apiGroups	<[]string>
+      nonResourceURLs	<[]string>
+      resourceNames	<[]string>
+      resources	<[]string>
+      verbs	<[]string>
+```

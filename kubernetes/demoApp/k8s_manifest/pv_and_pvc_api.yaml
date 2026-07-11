@@ -1,0 +1,27 @@
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: mynginxpv
+# spec:
+#   capacity:
+#     storage: 10Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Retain
+#   storageClassName: "oci-bv"
+#   claimRef:
+#     # namespace: demo-app
+#     name: mynginxclaim-5gi
+# ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mynginxclaim-5gi
+  namespace: demo-app
+spec:
+  storageClassName: "oci-bv"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 150Gi

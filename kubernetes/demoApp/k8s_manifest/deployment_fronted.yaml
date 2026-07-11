@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: fronted-app
+  name: fronted-app
+  namespace: demo-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fronted-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: fronted-app
+    spec:
+      containers:
+        - image: cosmoincorp/demo:fronted-app
+          name: fronted-app
+          imagePullPolicy: IfNotPresent
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ms-fronted-app
+  namespace: demo-app
+spec:
+  ports:
+    - name: frnt-app
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: fronted-app
+  type: NodePort

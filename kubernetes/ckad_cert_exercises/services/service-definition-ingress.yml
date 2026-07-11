@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+    - host: my-app.example.com # The host for which this rule applies
+      http:
+        paths:  # The path for which this rule applies
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: my-service # The name of the service to route traffic to
+              port: 
+               number: 80 # The port on which the service is exposed
+        - path: /api
+          pathType: Prefix
+          backend:
+            service:
+              name: my-api-service # Another service for a different path
+              port: 
+                number: 8080 # The port on which the API service is exposed

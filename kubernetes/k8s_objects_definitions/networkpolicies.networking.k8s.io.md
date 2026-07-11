@@ -1,0 +1,93 @@
+# Kind: NetworkPolicy
+### Version: networking.k8s.io/v1
+
+```yaml
+KIND:     NetworkPolicy
+VERSION:  networking.k8s.io/v1
+
+DESCRIPTION:
+     NetworkPolicy describes what network traffic is allowed for a set of Pods
+
+FIELDS:
+   apiVersion	<string>
+   kind	<string>
+   metadata	<Object>
+      annotations	<map[string]string>
+      creationTimestamp	<string>
+      deletionGracePeriodSeconds	<integer>
+      deletionTimestamp	<string>
+      finalizers	<[]string>
+      generateName	<string>
+      generation	<integer>
+      labels	<map[string]string>
+      managedFields	<[]Object>
+         apiVersion	<string>
+         fieldsType	<string>
+         fieldsV1	<map[string]>
+         manager	<string>
+         operation	<string>
+         subresource	<string>
+         time	<string>
+      name	<string>
+      namespace	<string>
+      ownerReferences	<[]Object>
+         apiVersion	<string>
+         blockOwnerDeletion	<boolean>
+         controller	<boolean>
+         kind	<string>
+         name	<string>
+         uid	<string>
+      resourceVersion	<string>
+      selfLink	<string>
+      uid	<string>
+   spec	<Object>
+      egress	<[]Object>
+         ports	<[]Object>
+            endPort	<integer>
+            port	<string>
+            protocol	<string>
+         to	<[]Object>
+            ipBlock	<Object>
+               cidr	<string>
+               except	<[]string>
+            namespaceSelector	<Object>
+               matchExpressions	<[]Object>
+                  key	<string>
+                  operator	<string>
+                  values	<[]string>
+               matchLabels	<map[string]string>
+            podSelector	<Object>
+               matchExpressions	<[]Object>
+                  key	<string>
+                  operator	<string>
+                  values	<[]string>
+               matchLabels	<map[string]string>
+      ingress	<[]Object>
+         from	<[]Object>
+            ipBlock	<Object>
+               cidr	<string>
+               except	<[]string>
+            namespaceSelector	<Object>
+               matchExpressions	<[]Object>
+                  key	<string>
+                  operator	<string>
+                  values	<[]string>
+               matchLabels	<map[string]string>
+            podSelector	<Object>
+               matchExpressions	<[]Object>
+                  key	<string>
+                  operator	<string>
+                  values	<[]string>
+               matchLabels	<map[string]string>
+         ports	<[]Object>
+            endPort	<integer>
+            port	<string>
+            protocol	<string>
+      podSelector	<Object>
+         matchExpressions	<[]Object>
+            key	<string>
+            operator	<string>
+            values	<[]string>
+         matchLabels	<map[string]string>
+      policyTypes	<[]string>
+```

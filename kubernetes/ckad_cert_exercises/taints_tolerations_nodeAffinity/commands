@@ -1,0 +1,2 @@
+## To taint a node 
+kubectl taint node worker spray=mortein:NoSchedule

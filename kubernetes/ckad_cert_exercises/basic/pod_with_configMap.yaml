@@ -1,0 +1,23 @@
+## Create a pod with two containers
+apiVersion: v1
+kind: Pod
+metadata:
+  name: two-containers-pod-configmap
+  labels:
+    app: label-app-basic-two-pod-configmap
+spec:
+  containers:
+    - name: apache-container
+      image: httpd:latest
+      env:
+      - name: APP_KEY
+        valueFrom:
+          configMapKeyRef:
+            name: configmap-basic
+            key: APP_KEY_NAME
+    - name: busy-container
+      image: registry.k8s.io/busybox:1.27.2
+      args:
+        - /bin/sh
+        - -c
+        - touch /tmp/healthy; sleep 30; echo "Hello world"; rm -f /tmp/healthy; sleep 600

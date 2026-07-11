@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: test-cronjob
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: test-cronjob
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - image: kodekloud/throw-dice
+            name: test-cronjob
+            resources: {}
+          restartPolicy: OnFailure
+  schedule: '*/1 * * * *'
+status: {}

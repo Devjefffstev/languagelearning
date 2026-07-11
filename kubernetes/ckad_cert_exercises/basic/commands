@@ -1,0 +1,19 @@
+## to modify kube-api-server
+vi /etc/kubernetes/manifests/kube-apiserver.yaml
+
+## to encode strings
+echo -n 'mypassword' | base64
+
+## to decode strings
+echo -n 'amVmZmVyc29u' | base64 --decode
+
+## To see the secret in etcd 
+ETCDCTL_API=3 etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key get /registry/secrets/default/secret-for-pod | hexdump -c
+
+## To replace your old secrets with new ones encrypted
+kubectl get secrets --all-namespaces -o json | kubectl replace -f -
+
+## To create a service account 
+    kubectl create serviceaccount my-service-account
+## to create a token for the service account
+    kubectl create token my-service-account

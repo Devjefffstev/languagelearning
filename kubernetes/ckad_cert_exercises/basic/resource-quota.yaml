@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: basic-resource-quota
+  namespace: basic-ns
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "4"
+status: {}

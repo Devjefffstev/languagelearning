@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: pod
+  name: pod-securitycontext
+spec:
+  securityContext:
+    runAsUser: 1001
+  containers:
+  - image: ubuntu
+    name: ubuntu-pod
+    command: ["sleep", "3600"]    
+    securityContext:
+      runAsUser: 1002
+  - image: ubuntu
+    name: ubuntu-pod-sys-time
+    command: ["sleep", "3600"]    
+    securityContext:
+      capabilities:
+        add: ["SYS_TIME", "NET_ADMIN"]
+  - name: busybox
+    image: registry.k8s.io/busybox:1.27.2
+    args:
+      - /bin/sh
+      - -c
+      - touch /tmp/healthy; sleep 30; echo "Hello world"; rm -f /tmp/healthy; sleep 600

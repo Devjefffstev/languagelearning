@@ -1,0 +1,85 @@
+# Kind: PersistentVolumeClaim
+### Version: v1
+
+```yaml
+KIND:     PersistentVolumeClaim
+VERSION:  v1
+
+DESCRIPTION:
+     PersistentVolumeClaim is a user's request for and claim to a persistent
+     volume
+
+FIELDS:
+   apiVersion	<string>
+   kind	<string>
+   metadata	<Object>
+      annotations	<map[string]string>
+      creationTimestamp	<string>
+      deletionGracePeriodSeconds	<integer>
+      deletionTimestamp	<string>
+      finalizers	<[]string>
+      generateName	<string>
+      generation	<integer>
+      labels	<map[string]string>
+      managedFields	<[]Object>
+         apiVersion	<string>
+         fieldsType	<string>
+         fieldsV1	<map[string]>
+         manager	<string>
+         operation	<string>
+         subresource	<string>
+         time	<string>
+      name	<string>
+      namespace	<string>
+      ownerReferences	<[]Object>
+         apiVersion	<string>
+         blockOwnerDeletion	<boolean>
+         controller	<boolean>
+         kind	<string>
+         name	<string>
+         uid	<string>
+      resourceVersion	<string>
+      selfLink	<string>
+      uid	<string>
+   spec	<Object>
+      accessModes	<[]string>
+      dataSource	<Object>
+         apiGroup	<string>
+         kind	<string>
+         name	<string>
+      dataSourceRef	<Object>
+         apiGroup	<string>
+         kind	<string>
+         name	<string>
+         namespace	<string>
+      resources	<Object>
+         limits	<map[string]string>
+         requests	<map[string]string>
+      selector	<Object>
+         matchExpressions	<[]Object>
+            key	<string>
+            operator	<string>
+            values	<[]string>
+         matchLabels	<map[string]string>
+      storageClassName	<string>
+      volumeAttributesClassName	<string>
+      volumeMode	<string>
+      volumeName	<string>
+   status	<Object>
+      accessModes	<[]string>
+      allocatedResourceStatuses	<map[string]string>
+      allocatedResources	<map[string]string>
+      capacity	<map[string]string>
+      conditions	<[]Object>
+         lastProbeTime	<string>
+         lastTransitionTime	<string>
+         message	<string>
+         reason	<string>
+         status	<string>
+         type	<string>
+      currentVolumeAttributesClassName	<string>
+      modifyVolumeStatus	<Object>
+         status	<string>
+         targetVolumeAttributesClassName	<string>
+      phase	<string>
+```

@@ -1,0 +1,34 @@
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: basic-pod
+  labels:
+    application: label-app-basic-pod
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx:latest 
+    
+
+---
+
+## Create a pod with two containers
+apiVersion: v1
+kind: Pod
+metadata:
+  name: two-containers-pod
+  labels:
+    app: label-app-basic-two-pod
+spec:
+  containers:
+    - name: apache-container
+      image: httpd:latest
+      env: 
+        - name: APP_KEY
+          value: "COLOR_KEY"
+    - name: busy-container
+      image: registry.k8s.io/busybox:1.27.2
+      args:
+        - /bin/sh
+        - -c
+        - touch /tmp/healthy; sleep 30; echo "Hello world"; rm -f /tmp/healthy; sleep 600

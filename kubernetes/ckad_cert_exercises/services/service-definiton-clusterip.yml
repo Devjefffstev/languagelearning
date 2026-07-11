@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-clusterip-service  
+spec:
+  type: ClusterIP # This specifies that the service type is ClusterIP, which is the default type
+  # ClusterIP services are only accessible within the cluster  
+  ports:
+    - port: 80 # The port that the service will expose \ Virtual server port
+      targetPort: 8080 # The port on which the service is exposed
+      # nodePort is not specified for ClusterIP services
+  selector:
+    app: my-app # This selector will match the pods with the label app=my-app

@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: addpod-job
+  namespace: default
+spec:
+  completions: 10
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - image: ubuntu
+        name: ubuntu-add
+        command: ['expr','2','+','4']
+        resources: {}
+      restartPolicy: Never
+status: {}

@@ -1,0 +1,93 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mycompany.app</groupId>
+    <artifactId>my-app</artifactId>
+    <version>1</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.clojure</groupId>
+            <artifactId>clojure</artifactId>
+            <version>1.11.1</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>clojars.org</id>
+            <url>https://repo.clojars.org/</url>
+        </repository>
+
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>clojars.org</id>
+            <url>https://repo.clojars.org/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <plugins>
+
+        
+            <plugin>
+                <groupId>com.theoryinpractise</groupId>
+                <artifactId>clojure-maven-plugin</artifactId>
+                <version>1.8.4</version>
+                <executions>
+                    <execution>
+                        <id>test-clojure-jeff-id</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <testNamespaces>
+                        <testNamespace>lein-template-project.core-test</testNamespace>
+                    </testNamespaces>
+                    <sourceDirectories>
+                        <sourceDirectory>src</sourceDirectory>
+                    </sourceDirectories>
+                    <testSourceDirectories>
+                        <testSourceDirectory>test</testSourceDirectory>
+                    </testSourceDirectories>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>vivid</groupId>
+                <artifactId>clojure-maven-plugin</artifactId>
+                <version>0.3.0</version>
+                <executions>
+                    <execution>
+                        <id>leiningen-release-build</id>                        <!-- Each execution requires a unique ID -->
+                        <phase>compile</phase>                        <!-- Bind goal execution to the desired Maven phase -->
+                        <goals>
+                            <goal>leiningen</goal>                            <!-- The vivid:clojure-maven-plugin Leiningen goal -->
+                        </goals>
+                        <configuration>
+
+                            <!-- Immediately prior to running Leiningen, vivid:clojure-maven-plugin will
+                     automatically download the specified version of Leiningen and its
+                     dependencies as necessary using Maven's dependency resolution system. -->
+                            <version>2.9.3</version>
+
+                            <!-- Leiningen tasks, aliases. Any valid 'lein' CLI arguments can be used here. -->
+                            <args>parallel-test</args>
+
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+
+
+            
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,16 @@
+## Example of using jobs and modifying them
+#clear 
+nameCronJob=test-cronjob
+namespace=default
+kubectl delete -f $nameCronJob.yaml -n $namespace
+
+echo -e "\nCreate cronjobs --------------------------------------------------------\n"
+kubectl create cronjob $nameCronJob --image=kodekloud/throw-dice --dry-run=client -o yaml --schedule="*/1 * * * *" > $nameCronJob.yaml
+kubectl apply -f $nameCronJob.yaml
+kubectl describe cronjob $nameCronJob -n $namespace
+
+echo -e "\nPrint jobs --------------------------------------------------------\n"
+kubectl get cronjobs -n $namespace
+kubectl describe cronjob $nameCronJob -n $namespace
+
+#rm -r $nameJob.yaml

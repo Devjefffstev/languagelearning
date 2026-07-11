@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: basic-replicaset
+  labels:
+    app: label-app-basic-replicaset
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: label-pod-basic-replicaset
+  template:
+    metadata:
+      labels:
+        app: label-pod-basic-replicaset
+    spec:
+      containers:
+      - name: mysql-container-replicaset
+        image: registry.k8s.io/busybox:1.27.2
+        args:
+          - /bin/sh
+          - -c
+          - touch /tmp/healthy; sleep 30; echo "Hello world"; rm -f /tmp/healthy; sleep 600
