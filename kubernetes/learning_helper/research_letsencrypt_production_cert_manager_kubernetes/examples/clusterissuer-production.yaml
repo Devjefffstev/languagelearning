@@ -1,0 +1,26 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod-namecheap
+spec:
+  acme:
+    # Replace this address with the operator's real ACME account email.
+    email: you@example.com
+    # Production issues publicly trusted certificates.
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Keep the production ACME account key separate from staging.
+    privateKeySecretRef:
+      name: letsencrypt-prod-namecheap-account-key
+    solvers:
+      - dns01:
+          webhook:
+            groupName: acme.namecheap.com
+            solverName: namecheap
+            config:
+              apiKeySecretRef:
+                name: namecheap-credentials
+                key: apiKey
+              apiUserSecretRef:
+                name: namecheap-credentials
+                key: apiUser
+              clientIP: 203.0.113.10

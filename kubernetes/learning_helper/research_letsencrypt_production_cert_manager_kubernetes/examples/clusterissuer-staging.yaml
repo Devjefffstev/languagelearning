@@ -1,0 +1,30 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging-namecheap
+spec:
+  acme:
+    # Replace this address with the operator's real ACME account email.
+    email: you@example.com
+    # Staging is for integration testing and does not issue browser-trusted certs.
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    # cert-manager creates and maintains this account-key Secret in its
+    # controller namespace. Keep it different from the production account key.
+    privateKeySecretRef:
+      name: letsencrypt-staging-namecheap-account-key
+    solvers:
+      - dns01:
+          webhook:
+            groupName: acme.namecheap.com
+            solverName: namecheap
+            config:
+              # These Secret references are resolved in the Certificate's
+              # namespace by the referenced webhook implementation.
+              apiKeySecretRef:
+                name: namecheap-credentials
+                key: apiKey
+              apiUserSecretRef:
+                name: namecheap-credentials
+                key: apiUser
+              # Use the stable public IPv4 whitelisted in Namecheap.
+              clientIP: 203.0.113.10

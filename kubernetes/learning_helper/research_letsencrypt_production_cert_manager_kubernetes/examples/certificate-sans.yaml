@@ -1,0 +1,22 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: your-domain-example
+  namespace: tls-demo
+spec:
+  # The Secret is created in this namespace and is what an Ingress, Gateway,
+  # or application mounts or references.
+  secretName: your-domain-example-tls
+  duration: 2160h # 90 days x 24 hours; Go duration syntax for 90 days.
+  renewBefore: 360h # Request renewal about 15 days before expiry.
+  privateKey:
+    rotationPolicy: Always
+  # Every DNS name is a SAN and must be authorized by the CA.
+  dnsNames:
+    - your-domain.example
+    - www.your-domain.example
+    - '*.your-domain.example'
+  issuerRef:
+    name: letsencrypt-staging-namecheap
+    kind: ClusterIssuer
+    group: cert-manager.io
