@@ -18,7 +18,10 @@ supabase = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_KEY"])
 # Filter with .eq(...) on language and learned, order by "word".
 # Print each row as: word (translation)
 # TODO: your code here
-
+spanish_words = supabase.table("words").select("*").eq("language","spanish").eq("learned", False).order("word").execute()
+for spanish in spanish_words.data:
+    print(f"{spanish["word"]} translation {spanish["translation"]}") 
+    
 # ---- TODO 2: Mark one word as learned --------------------------------------
 # Pick any word from the list above and update it with {"learned": True}.
 # Target it with .eq("word", "<the word>"). Print a confirmation.
