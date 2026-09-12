@@ -1,0 +1,3 @@
+# Keep real credentials and the virtual environment out of git.
+.env
+.venv/

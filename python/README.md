@@ -99,3 +99,42 @@ String literals can span multiple lines. One way is using triple-quotes: """..."
 print("""\
 ... Usage: thingy blabla
 ... """)
+
+---
+
+03-09-2026
+
+fibonnaci series: 
+the sum of two elements defines the next 
+
+a,b = 0,1 
+while a < 0
+    print(a)
+    a,b = b, a+b
+
+Today i want to explore modules and packages. i think it's very important to learn about how to structere your project 
+
+the filename is the module name with the suffix .py appended
+
+from fibo import fib, fibo_array
+from fibo import *  <-- this imports all names except those beginning with a underscore 
+
+import fibo as xyz 
+xyz.fib(500)
+
+Packages https://docs.python.org/3/tutorial/modules.html#packages
+are a way of structuring Python's module namespace by using "dotted module names"
+i.e module A.B designates a submodule named B in a package named A 
+
+__init__.py files are required to make python treat dirs containing the files as packages (unless using a namepace package)
+
+Note 
+when using 'from package import item'
+    item: can be either a submodule or subpackage of the package, or some other named defined in the package, like a function, class or variables
+
+When using: import item.subitem.subsubitem each item except for the last must be a package 
+
+Pending to go deep on __all__ use on __init__.py file 
+
+ Intra-package References
+When packages are structured into subpackages (as with the sound package in the example), you can use absolute imports to refer to submodules of siblings packages. For example, if the module sound.filters.vocoder needs to use the echo module in the sound.effects package, it can use from sound.effects import echo.
