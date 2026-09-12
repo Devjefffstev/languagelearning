@@ -26,12 +26,14 @@ for spanish in spanish_words.data:
 # Pick any word from the list above and update it with {"learned": True}.
 # Target it with .eq("word", "<the word>"). Print a confirmation.
 # TODO: your code here
-
+supabase.table("words").update({"learned": True}).eq("word", "libro").execute()
+print('word -> libro has been updated')
 # ---- TODO 3: Delete one row by its id ---------------------------------------
 # First select a row to get its id, then delete with .eq("id", <id>).
 # Print the id you removed. NEVER call delete() without a filter.
 # TODO: your code here
-
+supabase.table("words").delete().eq("id", "19").execute()
+print("6) Deleted '19'.")
 # ---- TODO 4: Sanity check ----------------------------------------------------
 # Re-fetch all rows and print the total count so you can see the result.
 # TODO: your code here
