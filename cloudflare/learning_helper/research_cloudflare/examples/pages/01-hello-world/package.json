@@ -1,0 +1,11 @@
+{
+  "name": "01-hello-world",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler pages dev public --port 8788",
+    "deploy": "wrangler pages deploy public"
+  },
+  "devDependencies": {
+    "wrangler": "^4.131.1"
+  }
+}

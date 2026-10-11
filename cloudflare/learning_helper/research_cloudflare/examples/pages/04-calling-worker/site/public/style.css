@@ -1,0 +1,39 @@
+:root {
+	color-scheme: light dark;
+	font-family: ui-sans-serif, system-ui, sans-serif;
+}
+body {
+	max-width: 720px;
+	margin: 4rem auto;
+	padding: 0 1rem;
+	line-height: 1.5;
+}
+h1 {
+	margin: 0 0 1rem;
+}
+section {
+	margin: 1.5rem 0;
+	padding: 1rem;
+	border: 1px solid rgba(127, 127, 127, 0.3);
+	border-radius: 8px;
+}
+button {
+	padding: 0.4rem 0.8rem;
+	border: 1px solid currentColor;
+	border-radius: 6px;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+pre {
+	background: rgba(127, 127, 127, 0.12);
+	padding: 1rem;
+	border-radius: 8px;
+	overflow: auto;
+	white-space: pre-wrap;
+}
+code {
+	background: rgba(127, 127, 127, 0.18);
+	padding: 0.1em 0.3em;
+	border-radius: 4px;
+}

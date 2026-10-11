@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Posts (KV-backed)</title>
+		<link rel="stylesheet" href="/style.css" />
+	</head>
+	<body>
+		<main>
+			<h1>Posts (KV)</h1>
+			<p>Same UI as 02-with-functions, but posts are stored in Cloudflare KV — state survives restarts.</p>
+			<form id="new">
+				<input name="title" placeholder="Post title" required />
+				<input name="body" placeholder="Post body" required />
+				<button>Add post</button>
+			</form>
+			<ul id="list"></ul>
+			<pre id="detail"></pre>
+		</main>
+		<script>
+			const $ = (s) => document.querySelector(s);
+			async function load() {
+				const r = await fetch("/api/posts");
+				const posts = await r.json();
+				$("#list").innerHTML = posts
+					.map((p) => `<li><a href="#" data-id="${p.id}">${p.title}</a></li>`)
+					.join("");
+				$("#list").querySelectorAll("a").forEach((a) =>
+					a.addEventListener("click", async (e) => {
+						e.preventDefault();
+						const r = await fetch("/api/posts/" + a.dataset.id);
+						$("#detail").textContent = JSON.stringify(await r.json(), null, 2);
+					}),
+				);
+			}
+			$("#new").addEventListener("submit", async (e) => {
+				e.preventDefault();
+				const fd = new FormData(e.target);
+				await fetch("/api/posts", {
+					method: "POST",
+					headers: { "content-type": "application/json" },
+					body: JSON.stringify({
+						title: fd.get("title"),
+						body: fd.get("body"),
+					}),
+				});
+				e.target.reset();
+				load();
+			});
+			load();
+		</script>
+	</body>
+</html>

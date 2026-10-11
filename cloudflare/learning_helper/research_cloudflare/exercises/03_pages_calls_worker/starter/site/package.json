@@ -1,0 +1,11 @@
+{
+  "name": "calling-worker-site",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler pages dev public --port 8790",
+    "deploy": "wrangler pages deploy public"
+  },
+  "devDependencies": {
+    "wrangler": "^4.131.1"
+  }
+}

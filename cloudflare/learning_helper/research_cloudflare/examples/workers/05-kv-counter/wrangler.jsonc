@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kv-counter",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-12",
+  "kv_namespaces": [
+    {
+      "binding": "COUNTERS",
+      "id": "REPLACE_WITH_REAL_ID",
+      "preview_id": "REPLACE_WITH_PREVIEW_ID"
+    }
+  ]
+}

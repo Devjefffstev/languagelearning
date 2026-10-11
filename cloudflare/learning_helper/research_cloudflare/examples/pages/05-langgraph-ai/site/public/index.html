@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LangGraph Chat (via Cloudflare Pages)</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="chat">
+      <header>
+        <h1>LangGraph Chat</h1>
+        <p class="subtitle">
+          Pages function <code>/api/chat</code> &rarr; Python LangGraph agent
+          (Anthropic Claude).
+        </p>
+      </header>
+
+      <ol id="messages" class="messages" aria-live="polite">
+        <li class="msg msg--assistant">
+          Hi! Ask me a math question (e.g. <em>What is 23 * 47?</em>) or
+          anything else. I will use my calculator tool when I need to.
+        </li>
+      </ol>
+
+      <form id="form" class="form" autocomplete="off">
+        <input
+          id="input"
+          name="message"
+          type="text"
+          placeholder="Type a message&hellip;"
+          required
+        />
+        <button type="submit" id="send">Send</button>
+      </form>
+
+      <p id="status" class="status" role="status"></p>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

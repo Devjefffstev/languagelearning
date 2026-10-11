@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Hello, Cloudflare Pages</title>
+		<link rel="stylesheet" href="/style.css" />
+	</head>
+	<body>
+		<main>
+			<h1>Hello from Cloudflare Pages</h1>
+			<p>This page is served from <code>public/index.html</code>.</p>
+			<p>Try the JSON endpoint:</p>
+			<a class="btn" href="/api/hello">GET /api/hello</a>
+			<a class="btn" href="/api/time">GET /api/time</a>
+			<pre id="out">Click a button to see the response.</pre>
+		</main>
+		<script>
+			document.querySelectorAll(".btn").forEach((el) =>
+				el.addEventListener("click", async (e) => {
+					e.preventDefault();
+					const r = await fetch(el.getAttribute("href"));
+					document.getElementById("out").textContent =
+						(await r.json()) && JSON.stringify(await r.clone().json(), null, 2);
+				}),
+			);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,13 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "pages-blog-kv",
+	"pages_build_output_dir": "public",
+	"compatibility_date": "2026-09-12",
+	"kv_namespaces": [
+		{
+			"binding": "POSTS",
+			"id": "d176cfb06f384f96a0a1bdbdee5a863c",
+			"preview_id": "5efc119d74f841cbbd703cd241036d9b"
+		}
+	]
+}

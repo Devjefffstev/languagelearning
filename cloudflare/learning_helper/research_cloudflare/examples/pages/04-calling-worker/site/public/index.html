@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Calling a Worker from Pages</title>
+		<link rel="stylesheet" href="/style.css" />
+	</head>
+	<body>
+		<main>
+			<h1>Calling a Worker from Pages</h1>
+			<p>
+				This site calls the same Worker two different ways. Click a button to
+				see what the response looks like.
+			</p>
+
+			<section>
+				<h2>1. Browser → Worker (direct)</h2>
+				<p>
+					Edit <code>public/app.js</code> and set <code>WORKER_URL</code> to
+					your deployed Worker URL (or <code>http://localhost:8789</code>
+					for local dev) before this works.
+				</p>
+				<button id="callBrowser">Call /echo from the browser</button>
+				<pre id="outBrowser">(no result yet)</pre>
+			</section>
+
+			<section>
+				<h2>2. Browser → Pages Function → Worker (service binding)</h2>
+				<p>
+					Goes through <code>/api/via-binding</code>. The Function calls the
+					Worker over a server-to-server binding, so no public URL is needed
+					and secrets stay on the server.
+				</p>
+				<button id="callBinding">Call /api/via-binding</button>
+				<pre id="outBinding">(no result yet)</pre>
+			</section>
+		</main>
+		<script src="/app.js"></script>
+	</body>
+</html>

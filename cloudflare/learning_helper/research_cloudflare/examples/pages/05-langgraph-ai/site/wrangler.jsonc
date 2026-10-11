@@ -1,0 +1,9 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "langgraph-ai-site",
+	"compatibility_date": "2026-10-10",
+	"pages_build_output_dir": "./public"
+	// AGENT_URL is set per-environment in the Cloudflare dashboard
+	// (or in .dev.vars for local dev). Example:
+	// "vars": { "AGENT_URL": "https://my-agent.fly.dev/chat" }
+}
